@@ -1,5 +1,7 @@
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
+using ZooManagement.Models.Data;
+using ZooManagement.Models.Request;
 
 namespace ZooManagement.Controllers;
 
@@ -37,5 +39,21 @@ public class AnimalsController : Controller
             .ToList();
         var animalsData = animalsList.Skip((page - 1) * pageSize).Take(pageSize).ToList();
         return Ok(animalsData);
+    }
+
+     [HttpPost]
+    public IActionResult Create([FromBody] CreateAnimalRequest createAnimalRequest)
+    {
+        var newAnimal = _zoo.Animals.Add(new Animal
+        {
+            Name = createAnimalRequest.Name,
+            SpeciesId = createAnimalRequest.SpeciesId,
+            Sex = createAnimalRequest.Sex,
+            DateOfBirth = createAnimalRequest.DateOfBirth,
+            DateOfAcquisition = createAnimalRequest.DateOfAcquisition,
+        }).Entity;
+        _zoo.SaveChanges();
+        var animal = _zoo.Animals.Include(animal=>animal.Species).Where(animal=> animal.Name==newAnimal.Name);
+        return Ok(animal);
     }
 }

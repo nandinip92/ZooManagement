@@ -10,6 +10,13 @@ namespace ZooManagement.Controllers;
 public class AnimalsController : Controller
 {
     private readonly Zoo _zoo;
+    private readonly ILogger<AnimalsController> _logger;
+
+    public AnimalsController(ILogger<AnimalsController> logger)
+    {
+        _logger = logger;
+    }
+
 
     public AnimalsController(Zoo zoo)
     {

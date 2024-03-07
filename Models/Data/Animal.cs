@@ -13,6 +13,8 @@ public class Animal
     [ForeignKey(nameof(SpeciesId))]
     public Species Species { get; set; } = null!;
 
+    public int EnclosureId{get;set;}
+    [ForeignKey(nameof(Enclosure.Id))]
     public required Sex Sex { get; set; }
     public DateTime? DateOfBirth { get; set; }
     public required DateTime DateOfAcquisition { get; set; }

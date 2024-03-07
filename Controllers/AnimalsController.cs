@@ -12,15 +12,11 @@ public class AnimalsController : Controller
     private readonly Zoo _zoo;
     private readonly ILogger<AnimalsController> _logger;
 
-    public AnimalsController(ILogger<AnimalsController> logger)
-    {
-        _logger = logger;
-    }
-
-
-    public AnimalsController(Zoo zoo)
+    public AnimalsController(ILogger<AnimalsController> logger,Zoo zoo)
     {
         _zoo = zoo;
+        _logger = logger;
+
     }
 
     [HttpGet("{id}")]

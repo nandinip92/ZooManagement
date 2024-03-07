@@ -145,7 +145,7 @@ public class Zoo : DbContext
         _logger.LogInformation(
             $"Creating Enclosure For {speciesClassType} with id: : {enclosureId}"
         );
-        string enclosureName = null;
+        string? enclosureName = null;
         if (speciesClassType.Equals("Bird"))
         {
             enclosureName = "Aviatory";

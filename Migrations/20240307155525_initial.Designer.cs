@@ -12,7 +12,7 @@ using ZooManagement;
 namespace ZooManagement.Migrations
 {
     [DbContext(typeof(Zoo))]
-    [Migration("20240307153905_initial")]
+    [Migration("20240307155525_initial")]
     partial class initial
     {
         /// <inheritdoc />
@@ -67,7 +67,7 @@ namespace ZooManagement.Migrations
                             EnclosureId = 118,
                             Name = "Simba",
                             Sex = 0,
-                            SpeciesId = -19
+                            SpeciesId = 19
                         },
                         new
                         {
@@ -77,7 +77,7 @@ namespace ZooManagement.Migrations
                             EnclosureId = 118,
                             Name = "Nala",
                             Sex = 1,
-                            SpeciesId = -19
+                            SpeciesId = 19
                         });
                 });
 
@@ -100,277 +100,272 @@ namespace ZooManagement.Migrations
                     b.HasData(
                         new
                         {
-                            Id = 101,
+                            Id = 100,
                             Name = "Aardvark Enclosure"
                         },
                         new
                         {
-                            Id = 102,
+                            Id = 101,
                             Name = "Antelope Enclosure"
                         },
                         new
                         {
-                            Id = 103,
+                            Id = 102,
                             Name = "Bear Enclosure"
                         },
                         new
                         {
-                            Id = 104,
+                            Id = 103,
                             Name = "Boar Enclosure"
                         },
                         new
                         {
-                            Id = 105,
+                            Id = 104,
                             Name = "Buffalo Enclosure"
                         },
                         new
                         {
-                            Id = 106,
+                            Id = 105,
                             Name = "Calf Enclosure"
                         },
                         new
                         {
-                            Id = 107,
+                            Id = 106,
                             Name = "Cavy Enclosure"
                         },
                         new
                         {
-                            Id = 108,
+                            Id = 107,
                             Name = "Cheetah Enclosure"
                         },
                         new
                         {
-                            Id = 109,
+                            Id = 108,
                             Name = "Deer Enclosure"
                         },
                         new
                         {
-                            Id = 110,
+                            Id = 109,
                             Name = "Dolphin Enclosure"
                         },
                         new
                         {
-                            Id = 111,
+                            Id = 110,
                             Name = "Elephant Enclosure"
                         },
                         new
                         {
-                            Id = 112,
+                            Id = 111,
                             Name = "Fruitbat Enclosure"
                         },
                         new
                         {
-                            Id = 113,
+                            Id = 112,
                             Name = "Giraffe Enclosure"
                         },
                         new
                         {
-                            Id = 114,
+                            Id = 113,
                             Name = "Goat Enclosure"
                         },
                         new
                         {
-                            Id = 115,
+                            Id = 114,
                             Name = "Gorilla Enclosure"
                         },
                         new
                         {
-                            Id = 116,
+                            Id = 115,
                             Name = "Hamster Enclosure"
                         },
                         new
                         {
-                            Id = 117,
+                            Id = 116,
                             Name = "Hare Enclosure"
                         },
                         new
                         {
-                            Id = 118,
+                            Id = 117,
                             Name = "Leopard Enclosure"
                         },
                         new
                         {
-                            Id = 119,
+                            Id = 118,
                             Name = "Lion Enclosure"
                         },
                         new
                         {
-                            Id = 120,
+                            Id = 119,
                             Name = "Lynx Enclosure"
                         },
                         new
                         {
-                            Id = 121,
+                            Id = 120,
                             Name = "Mink Enclosure"
                         },
                         new
                         {
-                            Id = 122,
+                            Id = 121,
                             Name = "Mole Enclosure"
                         },
                         new
                         {
-                            Id = 123,
+                            Id = 122,
                             Name = "Mongoose Enclosure"
                         },
                         new
                         {
-                            Id = 124,
+                            Id = 123,
                             Name = "Opossum Enclosure"
                         },
                         new
                         {
-                            Id = 125,
+                            Id = 124,
                             Name = "Oryx Enclosure"
                         },
                         new
                         {
-                            Id = 126,
+                            Id = 125,
                             Name = "Platypus Enclosure"
                         },
                         new
                         {
-                            Id = 127,
+                            Id = 126,
                             Name = "Polecat Enclosure"
                         },
                         new
                         {
-                            Id = 128,
+                            Id = 127,
                             Name = "Pony Enclosure"
                         },
                         new
                         {
-                            Id = 129,
+                            Id = 128,
                             Name = "Porpoise Enclosure"
                         },
                         new
                         {
-                            Id = 130,
+                            Id = 129,
                             Name = "Puma Enclosure"
                         },
                         new
                         {
-                            Id = 131,
+                            Id = 130,
                             Name = "Pussycat Enclosure"
                         },
                         new
                         {
-                            Id = 132,
+                            Id = 131,
                             Name = "Raccoon Enclosure"
                         },
                         new
                         {
-                            Id = 133,
+                            Id = 132,
                             Name = "Reindeer Enclosure"
                         },
                         new
                         {
-                            Id = 134,
+                            Id = 133,
                             Name = "Seal Enclosure"
                         },
                         new
                         {
-                            Id = 135,
+                            Id = 134,
                             Name = "Sealion Enclosure"
                         },
                         new
                         {
-                            Id = 136,
+                            Id = 135,
                             Name = "Squirrel Enclosure"
                         },
                         new
                         {
-                            Id = 137,
-                            Name = "Vampire Enclosure"
-                        },
-                        new
-                        {
-                            Id = 138,
+                            Id = 136,
                             Name = "Vole Enclosure"
                         },
                         new
                         {
-                            Id = 139,
+                            Id = 137,
                             Name = "Wallaby Enclosure"
                         },
                         new
                         {
-                            Id = 140,
+                            Id = 138,
                             Name = "Wolf Enclosure"
                         },
                         new
                         {
-                            Id = 141,
+                            Id = 139,
                             Name = "Aviatory"
                         },
                         new
                         {
-                            Id = 142,
+                            Id = 140,
                             Name = "Reptile House"
                         },
                         new
                         {
-                            Id = 143,
+                            Id = 141,
                             Name = "Aquarium"
                         },
                         new
                         {
-                            Id = 144,
+                            Id = 142,
                             Name = "Secret Life Of Amphibians"
                         },
                         new
                         {
-                            Id = 145,
+                            Id = 143,
                             Name = "Bugs Enclosure"
                         },
                         new
                         {
-                            Id = 146,
+                            Id = 144,
                             Name = "Clam Enclosure"
                         },
                         new
                         {
-                            Id = 147,
+                            Id = 145,
                             Name = "Crab Enclosure"
                         },
                         new
                         {
-                            Id = 148,
+                            Id = 146,
                             Name = "Crayfish Enclosure"
                         },
                         new
                         {
-                            Id = 149,
+                            Id = 147,
                             Name = "Lobster Enclosure"
                         },
                         new
                         {
-                            Id = 150,
+                            Id = 148,
                             Name = "Octopus Enclosure"
                         },
                         new
                         {
-                            Id = 151,
+                            Id = 149,
                             Name = "Scorpion Enclosure"
                         },
                         new
                         {
-                            Id = 152,
+                            Id = 150,
                             Name = "Seawasp Enclosure"
                         },
                         new
                         {
-                            Id = 153,
+                            Id = 151,
                             Name = "Slug Enclosure"
                         },
                         new
                         {
-                            Id = 154,
+                            Id = 152,
                             Name = "Starfish Enclosure"
                         },
                         new
                         {
-                            Id = 155,
+                            Id = 153,
                             Name = "Worm Enclosure"
                         });
                 });
@@ -615,377 +610,371 @@ namespace ZooManagement.Migrations
                         {
                             Id = 37,
                             Classification = 0,
-                            Name = "vampire"
+                            Name = "vole"
                         },
                         new
                         {
                             Id = 38,
                             Classification = 0,
-                            Name = "vole"
+                            Name = "wallaby"
                         },
                         new
                         {
                             Id = 39,
                             Classification = 0,
-                            Name = "wallaby"
-                        },
-                        new
-                        {
-                            Id = 40,
-                            Classification = 0,
                             Name = "wolf"
                         },
                         new
                         {
-                            Id = 41,
+                            Id = 40,
                             Classification = 2,
                             Name = "chicken"
                         },
                         new
                         {
-                            Id = 42,
+                            Id = 41,
                             Classification = 2,
                             Name = "crow"
                         },
                         new
                         {
-                            Id = 43,
+                            Id = 42,
                             Classification = 2,
                             Name = "dove"
                         },
                         new
                         {
-                            Id = 44,
+                            Id = 43,
                             Classification = 2,
                             Name = "duck"
                         },
                         new
                         {
-                            Id = 45,
+                            Id = 44,
                             Classification = 2,
                             Name = "flamingo"
                         },
                         new
                         {
-                            Id = 46,
+                            Id = 45,
                             Classification = 2,
                             Name = "gull"
                         },
                         new
                         {
-                            Id = 47,
+                            Id = 46,
                             Classification = 2,
                             Name = "hawk"
                         },
                         new
                         {
-                            Id = 48,
+                            Id = 47,
                             Classification = 2,
                             Name = "kiwi"
                         },
                         new
                         {
-                            Id = 49,
+                            Id = 48,
                             Classification = 2,
                             Name = "lark"
                         },
                         new
                         {
-                            Id = 50,
+                            Id = 49,
                             Classification = 2,
                             Name = "ostrich"
                         },
                         new
                         {
-                            Id = 51,
+                            Id = 50,
                             Classification = 2,
                             Name = "parakeet"
                         },
                         new
                         {
-                            Id = 52,
+                            Id = 51,
                             Classification = 2,
                             Name = "penguin"
                         },
                         new
                         {
-                            Id = 53,
+                            Id = 52,
                             Classification = 2,
                             Name = "pheasant"
                         },
                         new
                         {
-                            Id = 54,
+                            Id = 53,
                             Classification = 2,
                             Name = "rhea"
                         },
                         new
                         {
-                            Id = 55,
+                            Id = 54,
                             Classification = 2,
                             Name = "skimmer"
                         },
                         new
                         {
-                            Id = 56,
+                            Id = 55,
                             Classification = 2,
                             Name = "skua"
                         },
                         new
                         {
-                            Id = 57,
+                            Id = 56,
                             Classification = 2,
                             Name = "sparrow"
                         },
                         new
                         {
-                            Id = 58,
+                            Id = 57,
                             Classification = 2,
                             Name = "swan"
                         },
                         new
                         {
-                            Id = 59,
+                            Id = 58,
                             Classification = 2,
                             Name = "vulture"
                         },
                         new
                         {
-                            Id = 60,
+                            Id = 59,
                             Classification = 2,
                             Name = "wren"
                         },
                         new
                         {
-                            Id = 61,
+                            Id = 60,
                             Classification = 1,
                             Name = "pitviper"
                         },
                         new
                         {
-                            Id = 62,
+                            Id = 61,
                             Classification = 1,
                             Name = "seasnake"
                         },
                         new
                         {
-                            Id = 63,
+                            Id = 62,
                             Classification = 1,
                             Name = "slowworm"
                         },
                         new
                         {
-                            Id = 64,
+                            Id = 63,
                             Classification = 1,
                             Name = "tortoise"
                         },
                         new
                         {
-                            Id = 65,
+                            Id = 64,
                             Classification = 1,
                             Name = "tuatara"
                         },
                         new
                         {
-                            Id = 66,
+                            Id = 65,
                             Classification = 5,
                             Name = "bass"
                         },
                         new
                         {
-                            Id = 67,
+                            Id = 66,
                             Classification = 5,
                             Name = "carp"
                         },
                         new
                         {
-                            Id = 68,
+                            Id = 67,
                             Classification = 5,
                             Name = "catfish"
                         },
                         new
                         {
-                            Id = 69,
+                            Id = 68,
                             Classification = 5,
                             Name = "chub"
                         },
                         new
                         {
-                            Id = 70,
+                            Id = 69,
                             Classification = 5,
                             Name = "dogfish"
                         },
                         new
                         {
-                            Id = 71,
+                            Id = 70,
                             Classification = 5,
                             Name = "haddock"
                         },
                         new
                         {
-                            Id = 72,
+                            Id = 71,
                             Classification = 5,
                             Name = "herring"
                         },
                         new
                         {
-                            Id = 73,
+                            Id = 72,
                             Classification = 5,
                             Name = "pike"
                         },
                         new
                         {
-                            Id = 74,
+                            Id = 73,
                             Classification = 5,
                             Name = "piranha"
                         },
                         new
                         {
-                            Id = 75,
+                            Id = 74,
                             Classification = 5,
                             Name = "seahorse"
                         },
                         new
                         {
-                            Id = 76,
+                            Id = 75,
                             Classification = 5,
                             Name = "sole"
                         },
                         new
                         {
-                            Id = 77,
+                            Id = 76,
                             Classification = 5,
                             Name = "stingray"
                         },
                         new
                         {
-                            Id = 78,
+                            Id = 77,
                             Classification = 5,
                             Name = "tuna"
                         },
                         new
                         {
-                            Id = 79,
+                            Id = 78,
                             Classification = 4,
                             Name = "frog"
                         },
                         new
                         {
-                            Id = 80,
+                            Id = 79,
                             Classification = 4,
                             Name = "newt"
                         },
                         new
                         {
-                            Id = 81,
+                            Id = 80,
                             Classification = 4,
                             Name = "toad"
                         },
                         new
                         {
-                            Id = 82,
+                            Id = 81,
                             Classification = 3,
                             Name = "flea"
                         },
                         new
                         {
-                            Id = 83,
+                            Id = 82,
                             Classification = 3,
                             Name = "gnat"
                         },
                         new
                         {
-                            Id = 84,
+                            Id = 83,
                             Classification = 3,
                             Name = "honeybee"
                         },
                         new
                         {
-                            Id = 85,
+                            Id = 84,
                             Classification = 3,
                             Name = "housefly"
                         },
                         new
                         {
-                            Id = 86,
+                            Id = 85,
                             Classification = 3,
                             Name = "ladybird"
                         },
                         new
                         {
-                            Id = 87,
+                            Id = 86,
                             Classification = 3,
                             Name = "moth"
                         },
                         new
                         {
-                            Id = 88,
+                            Id = 87,
                             Classification = 3,
                             Name = "termite"
                         },
                         new
                         {
-                            Id = 89,
+                            Id = 88,
                             Classification = 3,
                             Name = "wasp"
                         },
                         new
                         {
-                            Id = 90,
+                            Id = 89,
                             Classification = 6,
                             Name = "clam"
                         },
                         new
                         {
-                            Id = 91,
+                            Id = 90,
                             Classification = 6,
                             Name = "crab"
                         },
                         new
                         {
-                            Id = 92,
+                            Id = 91,
                             Classification = 6,
                             Name = "crayfish"
                         },
                         new
                         {
-                            Id = 93,
+                            Id = 92,
                             Classification = 6,
                             Name = "lobster"
                         },
                         new
                         {
-                            Id = 94,
+                            Id = 93,
                             Classification = 6,
                             Name = "octopus"
                         },
                         new
                         {
-                            Id = 95,
+                            Id = 94,
                             Classification = 6,
                             Name = "scorpion"
                         },
                         new
                         {
-                            Id = 96,
+                            Id = 95,
                             Classification = 6,
                             Name = "seawasp"
                         },
                         new
                         {
-                            Id = 97,
+                            Id = 96,
                             Classification = 6,
                             Name = "slug"
                         },
                         new
                         {
-                            Id = 98,
+                            Id = 97,
                             Classification = 6,
                             Name = "starfish"
                         },
                         new
                         {
-                            Id = 99,
+                            Id = 98,
                             Classification = 6,
                             Name = "worm"
                         });

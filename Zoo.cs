@@ -43,7 +43,7 @@ public class Zoo : DbContext
         {
             Id = -1,
             Name = "Simba",
-            SpeciesId = -19,
+            SpeciesId = 19,
             EnclosureId = 118,
             Sex = Sex.Male,
             DateOfBirth = new DateTime(1997, 10, 16).ToUniversalTime(),
@@ -53,7 +53,7 @@ public class Zoo : DbContext
         {
             Id = -2,
             Name = "Nala",
-            SpeciesId = -19,
+            SpeciesId = 19,
             EnclosureId = 118,
             Sex = Sex.Female,
             DateOfBirth = new DateTime(1997, 9, 10).ToUniversalTime(),
@@ -99,8 +99,7 @@ public class Zoo : DbContext
                         && !speciesClassType.Equals("Invertebrate")
                     )
                     {
-                        enclosureId++;
-                        CreateNewEnclosure(modelBuilder, enclosureId, speciesClassType);
+                        CreateNewEnclosure(modelBuilder, enclosureId++, speciesClassType);
                     }
                     var animalNames = species.AnimalNames.Split(',').ToList();
                     foreach (var animal in animalNames)
@@ -119,11 +118,9 @@ public class Zoo : DbContext
                             || speciesClassType.Equals("Invertebrate")
                         )
                         {
-                            
-                            enclosureId++;
                             CreateNewEnclosure(
                                 modelBuilder,
-                                enclosureId,
+                                enclosureId++,
                                 speciesClassType,
                                 animal.Trim().ToLower()
                             );
@@ -148,36 +145,37 @@ public class Zoo : DbContext
         _logger.LogInformation(
             $"Creating Enclosure For {speciesClassType} with id: : {enclosureId}"
         );
+        string enclosureName = null;
         if (speciesClassType.Equals("Bird"))
         {
-            var newEnclosure = new Enclosure { Id = enclosureId, Name = "Aviatory" };
-            modelBuilder.Entity<Enclosure>().HasData(newEnclosure);
+            enclosureName = "Aviatory";
         }
         if (speciesClassType.Equals("Fish"))
         {
-            var newEnclosure = new Enclosure { Id = enclosureId, Name = "Aquarium" };
-            modelBuilder.Entity<Enclosure>().HasData(newEnclosure);
+            enclosureName = "Aquarium";
         }
         if (speciesClassType.Equals("Reptile"))
         {
-            var newEnclosure = new Enclosure { Id = enclosureId, Name = "Reptile House" };
-            modelBuilder.Entity<Enclosure>().HasData(newEnclosure);
+            enclosureName = "Reptile House";
         }
         if (speciesClassType.Equals("Amphibian"))
         {
-            var newEnclosure = new Enclosure
-            {
-                Id = enclosureId,
-                Name = "Secret Life Of Amphibians"
-            };
-            modelBuilder.Entity<Enclosure>().HasData(newEnclosure);
+            enclosureName = "Secret Life Of Amphibians";
         }
         if (speciesClassType.Equals("Insect"))
         {
-            var newEnclosure = new Enclosure { Id = enclosureId, Name = "Bugs Enclosure" };
-            modelBuilder.Entity<Enclosure>().HasData(newEnclosure);
+            enclosureName = "Bugs Enclosure";
         }
-        _logger.LogInformation($"Completed creating enclosure");
+        if (enclosureName != null)
+        {
+            var newEnclosure = new Enclosure { Id = enclosureId, Name = enclosureName };
+            modelBuilder.Entity<Enclosure>().HasData(newEnclosure);
+            _logger.LogInformation($"Completed creating enclosure");
+        }
+        else
+        {
+            _logger.LogWarning($"{speciesClassType} is Not valid. No Enclosure Creation");
+        }
     }
 
     protected void CreateNewEnclosure(

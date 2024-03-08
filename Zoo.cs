@@ -95,11 +95,11 @@ public class Zoo : DbContext
                 {
                     //Creating an Enclosure for Birds, Fishes, Reptiles, Insects, Bugs etc
                     if (
-                        !speciesClassType.Equals("Mammal")
-                        && !speciesClassType.Equals("Invertebrate")
+                        classification != Classification.Mammal
+                        && classification != Classification.Invertebrate
                     )
                     {
-                        CreateNewEnclosure(modelBuilder, enclosureId++, speciesClassType);
+                        CreateNewEnclosure(modelBuilder, enclosureId++, classification);
                     }
                     var animalNames = species.AnimalNames.Split(',').ToList();
                     foreach (var animal in animalNames)
@@ -114,14 +114,14 @@ public class Zoo : DbContext
                         modelBuilder.Entity<Species>().HasData(newSpecies);
                         //Creating a new Enclosure
                         if (
-                            speciesClassType.Equals("Mammal")
-                            || speciesClassType.Equals("Invertebrate")
+                            classification == Classification.Mammal
+                            || classification == Classification.Invertebrate
                         )
                         {
                             CreateNewEnclosure(
                                 modelBuilder,
                                 enclosureId++,
-                                speciesClassType,
+                                classification,
                                 animal.Trim().ToLower()
                             );
                         }
@@ -139,57 +139,70 @@ public class Zoo : DbContext
     protected void CreateNewEnclosure(
         ModelBuilder modelBuilder,
         int enclosureId,
-        string speciesClassType
+        Classification classification
     )
     {
         _logger.LogInformation(
-            $"Creating Enclosure For {speciesClassType} with id: : {enclosureId}"
+            $"Creating Enclosure For {classification.ToString()} with id: : {enclosureId}"
         );
         string? enclosureName = null;
-        if (speciesClassType.Equals("Bird"))
+        if (classification == Classification.Bird)
         {
             enclosureName = "Aviatory";
         }
-        if (speciesClassType.Equals("Fish"))
+        if (classification == Classification.Fish)
         {
             enclosureName = "Aquarium";
         }
-        if (speciesClassType.Equals("Reptile"))
+        if (classification == Classification.Reptile)
         {
             enclosureName = "Reptile House";
         }
-        if (speciesClassType.Equals("Amphibian"))
+        if (classification == Classification.Amphibian)
         {
             enclosureName = "Secret Life Of Amphibians";
         }
-        if (speciesClassType.Equals("Insect"))
+        if (classification == Classification.Insect)
         {
             enclosureName = "Bugs Enclosure";
         }
         if (enclosureName != null)
         {
-            var newEnclosure = new Enclosure { Id = enclosureId, Name = enclosureName };
+            var newEnclosure = new Enclosure
+            {
+                Id = enclosureId,
+                Name = enclosureName,
+                Classification = classification
+            };
             modelBuilder.Entity<Enclosure>().HasData(newEnclosure);
             _logger.LogInformation($"Completed creating enclosure");
         }
         else
         {
-            _logger.LogWarning($"{speciesClassType} is Not valid. No Enclosure Creation");
+            _logger.LogWarning($"{classification.ToString()} is Not valid. No Enclosure Creation");
         }
     }
 
     protected void CreateNewEnclosure(
         ModelBuilder modelBuilder,
         int enclosureId,
-        string speciesClassType,
+        Classification classification,
         string animalName
     )
     {
-        if (speciesClassType.Equals("Mammal") || speciesClassType.Equals("Invertebrate"))
+        if (
+            classification == Classification.Mammal
+            || classification == Classification.Invertebrate
+        )
         {
             //Capitalizing the first letter
             var enclosureName = char.ToUpper(animalName[0]) + animalName[1..] + " Enclosure";
-            var newEnclosure = new Enclosure { Id = enclosureId, Name = enclosureName };
+            var newEnclosure = new Enclosure
+            {
+                Id = enclosureId,
+                Name = enclosureName,
+                Classification = classification
+            };
             modelBuilder.Entity<Enclosure>().HasData(newEnclosure);
         }
     }

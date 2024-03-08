@@ -6,12 +6,12 @@ var builder = WebApplication.CreateBuilder(args);
 
 builder.Services.AddControllers();
 
-builder.Services.AddDbContext<Zoo>(options=>{
-    options.EnableSensitiveDataLogging();
-});
+builder.Services.AddDbContext<Zoo>();
+// (options=>{
+//     options.EnableSensitiveDataLogging();
+// });
 
 builder.Services.AddLogging(loggingBuilder=>{
-    loggingBuilder.ClearProviders();
     loggingBuilder.AddNLog();
 });
 
@@ -35,11 +35,3 @@ app.MapControllers();
 
 app.Run();
 
-
-
-
-// using NLog.Extensions.Logging;
-// builder.Services.AddLogging(loggingBuilder=>{
-//     loggingBuilder.ClearProviders();
-//     loggingBuilder.AddNLog();
-// });

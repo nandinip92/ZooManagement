@@ -44,7 +44,7 @@ public class Zoo : DbContext
             Id = -1,
             Name = "Simba",
             SpeciesId = 19,
-            EnclosureId = 118,
+            EnclosureId = 119,
             Sex = Sex.Male,
             DateOfBirth = new DateTime(1997, 10, 16).ToUniversalTime(),
             DateOfAcquisition = new DateTime(2000, 1, 1).ToUniversalTime(),
@@ -54,7 +54,7 @@ public class Zoo : DbContext
             Id = -2,
             Name = "Nala",
             SpeciesId = 19,
-            EnclosureId = 118,
+            EnclosureId = 119,
             Sex = Sex.Female,
             DateOfBirth = new DateTime(1997, 9, 10).ToUniversalTime(),
             DateOfAcquisition = new DateTime(2001, 2, 3).ToUniversalTime(),
@@ -93,38 +93,42 @@ public class Zoo : DbContext
                 Classification classification;
                 if (Enum.TryParse<Classification>(speciesClassType, out classification))
                 {
+                    // var SpeciesEnclosureId = enclosureId++;
                     //Creating an Enclosure for Birds, Fishes, Reptiles, Insects, Bugs etc
                     if (
                         classification != Classification.Mammal
                         && classification != Classification.Invertebrate
                     )
                     {
-                        CreateNewEnclosure(modelBuilder, enclosureId++, classification);
+                        CreateNewEnclosure(modelBuilder, ++enclosureId, classification);
                     }
                     var animalNames = species.AnimalNames.Split(',').ToList();
                     foreach (var animal in animalNames)
                     {
-                        //Creating a new species
-                        var newSpecies = new Species
-                        {
-                            Id = speciesId++,
-                            Name = animal.Trim(),
-                            Classification = classification
-                        };
-                        modelBuilder.Entity<Species>().HasData(newSpecies);
-                        //Creating a new Enclosure
+                         //Creating a new Enclosure
                         if (
                             classification == Classification.Mammal
                             || classification == Classification.Invertebrate
                         )
                         {
+                            // SpeciesEnclosureId=enclosureId++;
                             CreateNewEnclosure(
                                 modelBuilder,
-                                enclosureId++,
+                                ++enclosureId,
                                 classification,
                                 animal.Trim().ToLower()
                             );
                         }
+                        //Creating a new species
+                        var newSpecies = new Species
+                        {
+                            Id = speciesId++,
+                            Name = animal.Trim(),
+                            EnclosureId=enclosureId,
+                            Classification = classification
+                        };
+                        modelBuilder.Entity<Species>().HasData(newSpecies);
+                       
                     }
                 }
             }

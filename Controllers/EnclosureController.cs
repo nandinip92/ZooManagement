@@ -21,8 +21,21 @@ public class EnclosureController : Controller
     [HttpGet]
     public IActionResult GetAllEnclosures()
     {
-        var enclosures = _zoo.Enclosures.ToList();
-        return Ok(enclosures);
+        var enclosures = _zoo.Enclosures.Include(enclosure=>enclosure.Animals).ToList();
+        // return Ok(enclosures);
+        var enclosureResponseList = new List<EnclosureResponse>();
+        enclosures.ForEach(enclosure=>{
+            var animalNames = enclosure.Animals.Select(animal => animal.Name).ToList();
+            enclosureResponseList.Add(new EnclosureResponse
+            {
+                EnclosureId = enclosure.Id,
+                EnclosureName = enclosure.Name.ToLower(),
+                Classification = enclosure.Classification.ToString().ToLower(),
+                AnimalsCount = enclosure.Animals.Count,
+                Animals = animalNames
+            });
+        });
+        return Ok(enclosureResponseList);
     }
 
     [HttpGet("{id}")]

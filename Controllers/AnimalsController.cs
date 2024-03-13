@@ -29,7 +29,18 @@ public class AnimalsController : Controller
             return NotFound();
         }
         // _logger.LogInformation("Foud the match");
-        return Ok(matchingAnimal);
+        // return Ok(matchingAnimal);
+        return Ok(
+            new AnimalResponse
+            {
+                Name = matchingAnimal.Name,
+                SpeciesName = matchingAnimal.Species.Name,
+                Classification = matchingAnimal.Species.Classification.ToString().ToLower(),
+                Sex = matchingAnimal.Sex.ToString().ToLower(),
+                DateOfBirth = matchingAnimal.DateOfBirth,
+                DateOfAcquisition = matchingAnimal.DateOfAcquisition,
+            }
+        );
     }
 
     [HttpGet]

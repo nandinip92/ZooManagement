@@ -29,6 +29,10 @@ public class EnclosureController : Controller
     public IActionResult GetById([FromRoute] int id)
     {
         var enclosure = _zoo.Enclosures.SingleOrDefault(enclosure => enclosure.Id == id);
+         if (enclosure == null)
+        {
+            return NotFound();
+        }
         return Ok(
             new EnclosureResponse
             {

@@ -28,28 +28,26 @@ public class EnclosureController : Controller
     [HttpGet("{id}")]
     public IActionResult GetById([FromRoute] int id)
     {
-        var enclosure = _zoo.Enclosures.Include(enclosure=>enclosure.Animals).SingleOrDefault(enclosure => enclosure.Id == id);
-         if (enclosure == null)
+        var enclosure = _zoo
+            .Enclosures.Include(enclosure => enclosure.Animals)
+            .SingleOrDefault(enclosure => enclosure.Id == id);
+        if (enclosure == null)
         {
             return NotFound();
         }
+        var animalName = enclosure.Animals.Select(animal => animal.Name).ToList();
         return Ok(
             new EnclosureResponse
             {
                 EnclosureId = enclosure.Id,
                 EnclosureName = enclosure.Name.ToLower(),
                 Classification = enclosure.Classification.ToString().ToLower(),
-                AnimalsCount=enclosure.Animals.Count
+                AnimalsCount = enclosure.Animals.Count,
+                Animals = animalName
             }
         );
     }
 
-    [HttpGet("/enclosure/animals")]
-    public IActionResult GetAnimalsInEnclosure([FromQuery] int id){
-        var enclosure=_zoo.Enclosures.Include(enclosure=>enclosure.Animals).SingleOrDefault(enclosure => enclosure.Id == id);
-        Console.WriteLine(enclosure.Animals.Count);
-        return Ok(enclosure.Animals);
-    }
 
     // [HttpGet("/enclosure/")]
     // public IActionResult GetByClassification([FromQuery] string classification="")

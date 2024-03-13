@@ -28,7 +28,7 @@ public class EnclosureController : Controller
     [HttpGet("{id}")]
     public IActionResult GetById([FromRoute] int id)
     {
-        var enclosure = _zoo.Enclosures.SingleOrDefault(enclosure => enclosure.Id == id);
+        var enclosure = _zoo.Enclosures.Include(enclosure=>enclosure.Animals).SingleOrDefault(enclosure => enclosure.Id == id);
          if (enclosure == null)
         {
             return NotFound();
@@ -38,11 +38,18 @@ public class EnclosureController : Controller
             {
                 EnclosureId = enclosure.Id,
                 EnclosureName = enclosure.Name.ToLower(),
-                Classification = enclosure.Classification.ToString().ToLower()
+                Classification = enclosure.Classification.ToString().ToLower(),
+                AnimalsCount=enclosure.Animals.Count
             }
         );
     }
 
+    [HttpGet("/enclosure/animals")]
+    public IActionResult GetAnimalsInEnclosure([FromQuery] int id){
+        var enclosure=_zoo.Enclosures.Include(enclosure=>enclosure.Animals).SingleOrDefault(enclosure => enclosure.Id == id);
+        Console.WriteLine(enclosure.Animals.Count);
+        return Ok(enclosure.Animals);
+    }
 
     // [HttpGet("/enclosure/")]
     // public IActionResult GetByClassification([FromQuery] string classification="")

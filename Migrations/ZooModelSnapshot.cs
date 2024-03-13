@@ -1142,7 +1142,7 @@ namespace ZooManagement.Migrations
             modelBuilder.Entity("ZooManagement.Models.Data.Animal", b =>
                 {
                     b.HasOne("ZooManagement.Models.Data.Enclosure", "Enclosure")
-                        .WithMany()
+                        .WithMany("Animals")
                         .HasForeignKey("EnclosureId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
@@ -1167,6 +1167,11 @@ namespace ZooManagement.Migrations
                         .IsRequired();
 
                     b.Navigation("Enclosure");
+                });
+
+            modelBuilder.Entity("ZooManagement.Models.Data.Enclosure", b =>
+                {
+                    b.Navigation("Animals");
                 });
 #pragma warning restore 612, 618
         }

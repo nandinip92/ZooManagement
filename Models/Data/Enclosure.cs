@@ -1,4 +1,5 @@
 using System.ComponentModel.DataAnnotations;
+using System.ComponentModel.DataAnnotations.Schema;
 using ZooManagement.Enums;
 
 namespace ZooManagement.Models.Data;
@@ -10,5 +11,6 @@ public class Enclosure
 
     public required Classification Classification { get; set; }
 
-    // public List<Animal> Animals { get; set; } = null!;
+    [InverseProperty(nameof(Animal.Enclosure))]
+    public List<Animal> Animals { get; set; } = [];
 }

@@ -38,7 +38,8 @@ public class AnimalsController : Controller
                 SpeciesName = matchingAnimal.Species.Name,
                 Classification = matchingAnimal.Species.Classification.ToString().ToLower(),
                 Sex = matchingAnimal.Sex.ToString().ToLower(),
-                EnclosureName = matchingAnimal.Enclosure.Name,
+                EnclosureId = matchingAnimal.Enclosure.Id,
+                EnclosureName = matchingAnimal.Enclosure.Name.ToLower(),
                 DateOfBirth = matchingAnimal.DateOfBirth,
                 DateOfAcquisition = matchingAnimal.DateOfAcquisition,
             }
@@ -55,7 +56,24 @@ public class AnimalsController : Controller
             .ThenBy(animal => animal.Name)
             .ToList();
         var animalsData = animalsList.Skip((page - 1) * pageSize).Take(pageSize).ToList();
-        return Ok(animalsData);
+        var responseList = new List<AnimalResponse>();
+        animalsData.ForEach(animal =>
+        {
+            responseList.Add(
+                new AnimalResponse
+                {
+                    Name = animal.Name,
+                    SpeciesName = animal.Species.Name,
+                    Classification = animal.Species.Classification.ToString().ToLower(),
+                    Sex = animal.Sex.ToString().ToLower(),
+                    EnclosureId = animal.Enclosure.Id,
+                    EnclosureName = animal.Enclosure.Name.ToLower(),
+                    DateOfBirth = animal.DateOfBirth,
+                    DateOfAcquisition = animal.DateOfAcquisition,
+                }
+            );
+        });
+        return Ok(responseList);
     }
 
     [HttpPost]
@@ -84,7 +102,19 @@ public class AnimalsController : Controller
         var animal = _zoo
             .Animals.Include(animal => animal.Species)
             .ThenInclude(animal => animal.Enclosure)
-            .Where(animal => animal.Name == newAnimal.Name);
-        return Ok(animal);
+            .Where(animal => animal.Name == newAnimal.Name).Single();
+            
+        return Ok( new AnimalResponse
+                {
+                    Name = animal.Name,
+                    SpeciesName = animal.Species.Name,
+                    Classification = animal.Species.Classification.ToString().ToLower(),
+                    Sex = animal.Sex.ToString().ToLower(),
+                    EnclosureId = animal.Enclosure.Id,
+                    EnclosureName = animal.Enclosure.Name.ToLower(),
+                    DateOfBirth = animal.DateOfBirth,
+                    DateOfAcquisition = animal.DateOfAcquisition,
+                });
+        // return Ok();
     }
 }

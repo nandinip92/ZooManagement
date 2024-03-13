@@ -13,6 +13,7 @@ public class Zoo : DbContext
 {
     public DbSet<Animal> Animals { get; set; } = null!;
     public DbSet<Species> Species { get; set; } = null!;
+    public DbSet<Enclosure> Enclosures { get; set; } = null!;
     private readonly ILogger<Zoo> _logger;
 
     public Zoo(DbContextOptions<Zoo> options, ILogger<Zoo> logger)

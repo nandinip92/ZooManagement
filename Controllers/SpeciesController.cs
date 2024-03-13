@@ -39,12 +39,12 @@ public class SpeciesController : Controller
         return Ok(species);
     }
 
-    // [HttpGet("/name")]
-    // public IActionResult GetByName([FromQuery] string name="")
-    // {
-    //     var species = _zoo
-    //         .Species.Include(species => species.Enclosure)
-    //         .SingleOrDefault(species => species.Name == name);
-    //     return Ok(species);
-    // }
+    [HttpGet("/speciecs/")]
+    public IActionResult GetByName([FromQuery] string name="")
+    {
+        var species = _zoo
+            .Species.Include(species => species.Enclosure)
+            .SingleOrDefault(species => species.Name.ToLower() == name.ToLower());
+        return Ok(species);
+    }
 }

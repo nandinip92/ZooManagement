@@ -12,7 +12,7 @@ using ZooManagement;
 namespace ZooManagement.Migrations
 {
     [DbContext(typeof(Zoo))]
-    [Migration("20240313104150_Initial")]
+    [Migration("20240313115921_Initial")]
     partial class Initial
     {
         /// <inheritdoc />
@@ -100,7 +100,7 @@ namespace ZooManagement.Migrations
 
                     b.HasKey("Id");
 
-                    b.ToTable("Enclosure");
+                    b.ToTable("Enclosures");
 
                     b.HasData(
                         new

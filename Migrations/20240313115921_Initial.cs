@@ -15,7 +15,7 @@ namespace ZooManagement.Migrations
         protected override void Up(MigrationBuilder migrationBuilder)
         {
             migrationBuilder.CreateTable(
-                name: "Enclosure",
+                name: "Enclosures",
                 columns: table => new
                 {
                     Id = table.Column<int>(type: "integer", nullable: false)
@@ -25,7 +25,7 @@ namespace ZooManagement.Migrations
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_Enclosure", x => x.Id);
+                    table.PrimaryKey("PK_Enclosures", x => x.Id);
                 });
 
             migrationBuilder.CreateTable(
@@ -42,9 +42,9 @@ namespace ZooManagement.Migrations
                 {
                     table.PrimaryKey("PK_Species", x => x.Id);
                     table.ForeignKey(
-                        name: "FK_Species_Enclosure_EnclosureId",
+                        name: "FK_Species_Enclosures_EnclosureId",
                         column: x => x.EnclosureId,
-                        principalTable: "Enclosure",
+                        principalTable: "Enclosures",
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Cascade);
                 });
@@ -66,9 +66,9 @@ namespace ZooManagement.Migrations
                 {
                     table.PrimaryKey("PK_Animals", x => x.Id);
                     table.ForeignKey(
-                        name: "FK_Animals_Enclosure_EnclosureId",
+                        name: "FK_Animals_Enclosures_EnclosureId",
                         column: x => x.EnclosureId,
-                        principalTable: "Enclosure",
+                        principalTable: "Enclosures",
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Cascade);
                     table.ForeignKey(
@@ -80,7 +80,7 @@ namespace ZooManagement.Migrations
                 });
 
             migrationBuilder.InsertData(
-                table: "Enclosure",
+                table: "Enclosures",
                 columns: new[] { "Id", "Classification", "Name" },
                 values: new object[,]
                 {
@@ -280,7 +280,7 @@ namespace ZooManagement.Migrations
                 name: "Species");
 
             migrationBuilder.DropTable(
-                name: "Enclosure");
+                name: "Enclosures");
         }
     }
 }

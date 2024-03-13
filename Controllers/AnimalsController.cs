@@ -23,6 +23,7 @@ public class AnimalsController : Controller
     {
         var matchingAnimal = _zoo
             .Animals.Include(animal => animal.Species)
+            .Include(animal => animal.Enclosure)
             .SingleOrDefault(animal => animal.Id == id);
         if (matchingAnimal == null)
         {
@@ -37,6 +38,7 @@ public class AnimalsController : Controller
                 SpeciesName = matchingAnimal.Species.Name,
                 Classification = matchingAnimal.Species.Classification.ToString().ToLower(),
                 Sex = matchingAnimal.Sex.ToString().ToLower(),
+                EnclosureName = matchingAnimal.Enclosure.Name,
                 DateOfBirth = matchingAnimal.DateOfBirth,
                 DateOfAcquisition = matchingAnimal.DateOfAcquisition,
             }
@@ -48,7 +50,7 @@ public class AnimalsController : Controller
     {
         var animalsList = _zoo
             .Animals.Include(animal => animal.Species)
-            .Include(animal => animal.EnclosureId)
+            .Include(animal => animal.Enclosure)
             .OrderBy(animal => animal.Species.Name)
             .ThenBy(animal => animal.Name)
             .ToList();
@@ -81,7 +83,7 @@ public class AnimalsController : Controller
         _zoo.SaveChanges();
         var animal = _zoo
             .Animals.Include(animal => animal.Species)
-            // .ThenInclude(animal => animal.Enclosure)
+            .ThenInclude(animal => animal.Enclosure)
             .Where(animal => animal.Name == newAnimal.Name);
         return Ok(animal);
     }

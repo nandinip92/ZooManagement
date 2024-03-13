@@ -97,7 +97,7 @@ namespace ZooManagement.Migrations
 
                     b.HasKey("Id");
 
-                    b.ToTable("Enclosure");
+                    b.ToTable("Enclosures");
 
                     b.HasData(
                         new

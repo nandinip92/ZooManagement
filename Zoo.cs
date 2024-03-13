@@ -24,7 +24,7 @@ public class Zoo : DbContext
     protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
     {
         optionsBuilder.UseNpgsql(
-            "Host=localhost; Port=5432; Database=zoo; Username=zoo; Password=zoo;"
+            "Host=localhost; Port=5432; Database=zoo; Username=zoo; Password=zoo;Include Error Detail=True;"
         );
     }
 
@@ -43,7 +43,7 @@ public class Zoo : DbContext
         {
             Id = -1,
             Name = "Simba",
-            SpeciesId = 19,
+            SpeciesId = -19,
             EnclosureId = 119,
             Sex = Sex.Male,
             DateOfBirth = new DateTime(1997, 10, 16).ToUniversalTime(),
@@ -53,7 +53,7 @@ public class Zoo : DbContext
         {
             Id = -2,
             Name = "Nala",
-            SpeciesId = 19,
+            SpeciesId = -19,
             EnclosureId = 119,
             Sex = Sex.Female,
             DateOfBirth = new DateTime(1997, 9, 10).ToUniversalTime(),
@@ -85,8 +85,9 @@ public class Zoo : DbContext
                 }
             };
             using var csvData = new CsvReader(fileReader, csvConfig);
-            int speciesId = 1;
-            int enclosureId = 100;
+            int speciesId = 0;
+            int enclosureId = 100
+            ;
             foreach (var species in csvData.GetRecords<SpeciesClassification>())
             {
                 var speciesClassType = species.ClassType;
@@ -105,7 +106,7 @@ public class Zoo : DbContext
                     var animalNames = species.AnimalNames.Split(',').ToList();
                     foreach (var animal in animalNames)
                     {
-                         //Creating a new Enclosure
+                        //Creating a new Enclosure
                         if (
                             classification == Classification.Mammal
                             || classification == Classification.Invertebrate
@@ -122,13 +123,12 @@ public class Zoo : DbContext
                         //Creating a new species
                         var newSpecies = new Species
                         {
-                            Id = speciesId++,
+                            Id = --speciesId,
                             Name = animal.Trim(),
-                            EnclosureId=enclosureId,
-                            Classification = classification
+                            Classification = classification,
+                            EnclosureId = enclosureId,
                         };
                         modelBuilder.Entity<Species>().HasData(newSpecies);
-                       
                     }
                 }
             }
@@ -199,6 +199,9 @@ public class Zoo : DbContext
             || classification == Classification.Invertebrate
         )
         {
+            _logger.LogInformation(
+                $"Creating Enclosure For {classification.ToString()} with id: : {enclosureId}"
+            );
             //Capitalizing the first letter
             var enclosureName = char.ToUpper(animalName[0]) + animalName[1..] + " Enclosure";
             var newEnclosure = new Enclosure

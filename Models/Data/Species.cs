@@ -7,8 +7,10 @@ public class Species
 {
     public int Id { get; set; }
     public required string Name { get; set; }
-    public int EnclosureId{get;set;}
-    [ForeignKey (nameof(Enclosure.Id))]
     public required Classification Classification { get; set; }
-    
+
+    public int EnclosureId { get; set; }
+
+    [ForeignKey(nameof(EnclosureId))]
+    public Enclosure Enclosure { get; set; } = null!;
 }

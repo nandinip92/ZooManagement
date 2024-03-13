@@ -1,17 +1,17 @@
-using ZooManagement;
 using NLog.Extensions.Logging;
-
+using ZooManagement;
 
 var builder = WebApplication.CreateBuilder(args);
 
 builder.Services.AddControllers();
 
-builder.Services.AddDbContext<Zoo>();
-// (options=>{
-//     options.EnableSensitiveDataLogging();
-// });
+builder.Services.AddDbContext<Zoo>(options =>
+{
+    options.EnableSensitiveDataLogging();
+});
 
-builder.Services.AddLogging(loggingBuilder=>{
+builder.Services.AddLogging(loggingBuilder =>
+{
     loggingBuilder.AddNLog();
 });
 
@@ -34,4 +34,3 @@ app.UseHttpsRedirection();
 app.MapControllers();
 
 app.Run();
-

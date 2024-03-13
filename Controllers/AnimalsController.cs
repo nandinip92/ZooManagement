@@ -12,11 +12,10 @@ public class AnimalsController : Controller
     private readonly Zoo _zoo;
     private readonly ILogger<AnimalsController> _logger;
 
-    public AnimalsController(ILogger<AnimalsController> logger,Zoo zoo)
+    public AnimalsController(ILogger<AnimalsController> logger, Zoo zoo)
     {
         _zoo = zoo;
         _logger = logger;
-
     }
 
     [HttpGet("{id}")]
@@ -29,6 +28,7 @@ public class AnimalsController : Controller
         {
             return NotFound();
         }
+        // _logger.LogInformation("Foud the match");
         return Ok(matchingAnimal);
     }
 
@@ -37,6 +37,7 @@ public class AnimalsController : Controller
     {
         var animalsList = _zoo
             .Animals.Include(animal => animal.Species)
+            .Include(animal => animal.EnclosureId)
             .OrderBy(animal => animal.Species.Name)
             .ThenBy(animal => animal.Name)
             .ToList();
@@ -44,19 +45,33 @@ public class AnimalsController : Controller
         return Ok(animalsData);
     }
 
-     [HttpPost]
+    [HttpPost]
     public IActionResult Create([FromBody] CreateAnimalRequest createAnimalRequest)
     {
-        var newAnimal = _zoo.Animals.Add(new Animal
-        {
-            Name = createAnimalRequest.Name,
-            SpeciesId = createAnimalRequest.SpeciesId,
-            Sex = createAnimalRequest.Sex,
-            DateOfBirth = createAnimalRequest.DateOfBirth,
-            DateOfAcquisition = createAnimalRequest.DateOfAcquisition,
-        }).Entity;
+        //Based on the Species Id finding the EnclosureId
+        var newAnimalEnclosureId = _zoo
+            .Species.Where(animal => animal.Id == createAnimalRequest.SpeciesId)
+            .Select(animal => animal.EnclosureId)
+            .Single();
+
+        var newAnimal = _zoo
+            .Animals.Add(
+                new Animal
+                {
+                    Name = createAnimalRequest.Name,
+                    SpeciesId = createAnimalRequest.SpeciesId,
+                    EnclosureId = newAnimalEnclosureId,
+                    Sex = createAnimalRequest.Sex,
+                    DateOfBirth = createAnimalRequest.DateOfBirth,
+                    DateOfAcquisition = createAnimalRequest.DateOfAcquisition,
+                }
+            )
+            .Entity;
         _zoo.SaveChanges();
-        var animal = _zoo.Animals.Include(animal=>animal.Species).Where(animal=> animal.Name==newAnimal.Name);
+        var animal = _zoo
+            .Animals.Include(animal => animal.Species)
+            // .ThenInclude(animal => animal.Enclosure)
+            .Where(animal => animal.Name == newAnimal.Name);
         return Ok(animal);
     }
 }

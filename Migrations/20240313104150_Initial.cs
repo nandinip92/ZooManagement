@@ -35,12 +35,18 @@ namespace ZooManagement.Migrations
                     Id = table.Column<int>(type: "integer", nullable: false)
                         .Annotation("Npgsql:ValueGenerationStrategy", NpgsqlValueGenerationStrategy.IdentityByDefaultColumn),
                     Name = table.Column<string>(type: "text", nullable: false),
-                    EnclosureId = table.Column<int>(type: "integer", nullable: false),
-                    Classification = table.Column<int>(type: "integer", nullable: false)
+                    Classification = table.Column<int>(type: "integer", nullable: false),
+                    EnclosureId = table.Column<int>(type: "integer", nullable: false)
                 },
                 constraints: table =>
                 {
                     table.PrimaryKey("PK_Species", x => x.Id);
+                    table.ForeignKey(
+                        name: "FK_Species_Enclosure_EnclosureId",
+                        column: x => x.EnclosureId,
+                        principalTable: "Enclosure",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Cascade);
                 });
 
             migrationBuilder.CreateTable(
@@ -59,6 +65,12 @@ namespace ZooManagement.Migrations
                 constraints: table =>
                 {
                     table.PrimaryKey("PK_Animals", x => x.Id);
+                    table.ForeignKey(
+                        name: "FK_Animals_Enclosure_EnclosureId",
+                        column: x => x.EnclosureId,
+                        principalTable: "Enclosure",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Cascade);
                     table.ForeignKey(
                         name: "FK_Animals_Species_SpeciesId",
                         column: x => x.SpeciesId,
@@ -133,104 +145,104 @@ namespace ZooManagement.Migrations
                 columns: new[] { "Id", "Classification", "EnclosureId", "Name" },
                 values: new object[,]
                 {
-                    { 1, 0, 101, "aardvark" },
-                    { 2, 0, 102, "antelope" },
-                    { 3, 0, 103, "bear" },
-                    { 4, 0, 104, "boar" },
-                    { 5, 0, 105, "buffalo" },
-                    { 6, 0, 106, "calf" },
-                    { 7, 0, 107, "cavy" },
-                    { 8, 0, 108, "cheetah" },
-                    { 9, 0, 109, "deer" },
-                    { 10, 0, 110, "dolphin" },
-                    { 11, 0, 111, "elephant" },
-                    { 12, 0, 112, "fruitbat" },
-                    { 13, 0, 113, "giraffe" },
-                    { 14, 0, 114, "goat" },
-                    { 15, 0, 115, "gorilla" },
-                    { 16, 0, 116, "hamster" },
-                    { 17, 0, 117, "hare" },
-                    { 18, 0, 118, "leopard" },
-                    { 19, 0, 119, "lion" },
-                    { 20, 0, 120, "lynx" },
-                    { 21, 0, 121, "mink" },
-                    { 22, 0, 122, "mole" },
-                    { 23, 0, 123, "mongoose" },
-                    { 24, 0, 124, "opossum" },
-                    { 25, 0, 125, "oryx" },
-                    { 26, 0, 126, "platypus" },
-                    { 27, 0, 127, "polecat" },
-                    { 28, 0, 128, "pony" },
-                    { 29, 0, 129, "porpoise" },
-                    { 30, 0, 130, "puma" },
-                    { 31, 0, 131, "pussycat" },
-                    { 32, 0, 132, "raccoon" },
-                    { 33, 0, 133, "reindeer" },
-                    { 34, 0, 134, "seal" },
-                    { 35, 0, 135, "sealion" },
-                    { 36, 0, 136, "squirrel" },
-                    { 37, 0, 137, "vole" },
-                    { 38, 0, 138, "wallaby" },
-                    { 39, 0, 139, "wolf" },
-                    { 40, 2, 140, "chicken" },
-                    { 41, 2, 140, "crow" },
-                    { 42, 2, 140, "dove" },
-                    { 43, 2, 140, "duck" },
-                    { 44, 2, 140, "flamingo" },
-                    { 45, 2, 140, "gull" },
-                    { 46, 2, 140, "hawk" },
-                    { 47, 2, 140, "kiwi" },
-                    { 48, 2, 140, "lark" },
-                    { 49, 2, 140, "ostrich" },
-                    { 50, 2, 140, "parakeet" },
-                    { 51, 2, 140, "penguin" },
-                    { 52, 2, 140, "pheasant" },
-                    { 53, 2, 140, "rhea" },
-                    { 54, 2, 140, "skimmer" },
-                    { 55, 2, 140, "skua" },
-                    { 56, 2, 140, "sparrow" },
-                    { 57, 2, 140, "swan" },
-                    { 58, 2, 140, "vulture" },
-                    { 59, 2, 140, "wren" },
-                    { 60, 1, 141, "pitviper" },
-                    { 61, 1, 141, "seasnake" },
-                    { 62, 1, 141, "slowworm" },
-                    { 63, 1, 141, "tortoise" },
-                    { 64, 1, 141, "tuatara" },
-                    { 65, 5, 142, "bass" },
-                    { 66, 5, 142, "carp" },
-                    { 67, 5, 142, "catfish" },
-                    { 68, 5, 142, "chub" },
-                    { 69, 5, 142, "dogfish" },
-                    { 70, 5, 142, "haddock" },
-                    { 71, 5, 142, "herring" },
-                    { 72, 5, 142, "pike" },
-                    { 73, 5, 142, "piranha" },
-                    { 74, 5, 142, "seahorse" },
-                    { 75, 5, 142, "sole" },
-                    { 76, 5, 142, "stingray" },
-                    { 77, 5, 142, "tuna" },
-                    { 78, 4, 143, "frog" },
-                    { 79, 4, 143, "newt" },
-                    { 80, 4, 143, "toad" },
-                    { 81, 3, 144, "flea" },
-                    { 82, 3, 144, "gnat" },
-                    { 83, 3, 144, "honeybee" },
-                    { 84, 3, 144, "housefly" },
-                    { 85, 3, 144, "ladybird" },
-                    { 86, 3, 144, "moth" },
-                    { 87, 3, 144, "termite" },
-                    { 88, 3, 144, "wasp" },
-                    { 89, 6, 145, "clam" },
-                    { 90, 6, 146, "crab" },
-                    { 91, 6, 147, "crayfish" },
-                    { 92, 6, 148, "lobster" },
-                    { 93, 6, 149, "octopus" },
-                    { 94, 6, 150, "scorpion" },
-                    { 95, 6, 151, "seawasp" },
-                    { 96, 6, 152, "slug" },
-                    { 97, 6, 153, "starfish" },
-                    { 98, 6, 154, "worm" }
+                    { -98, 6, 154, "worm" },
+                    { -97, 6, 153, "starfish" },
+                    { -96, 6, 152, "slug" },
+                    { -95, 6, 151, "seawasp" },
+                    { -94, 6, 150, "scorpion" },
+                    { -93, 6, 149, "octopus" },
+                    { -92, 6, 148, "lobster" },
+                    { -91, 6, 147, "crayfish" },
+                    { -90, 6, 146, "crab" },
+                    { -89, 6, 145, "clam" },
+                    { -88, 3, 144, "wasp" },
+                    { -87, 3, 144, "termite" },
+                    { -86, 3, 144, "moth" },
+                    { -85, 3, 144, "ladybird" },
+                    { -84, 3, 144, "housefly" },
+                    { -83, 3, 144, "honeybee" },
+                    { -82, 3, 144, "gnat" },
+                    { -81, 3, 144, "flea" },
+                    { -80, 4, 143, "toad" },
+                    { -79, 4, 143, "newt" },
+                    { -78, 4, 143, "frog" },
+                    { -77, 5, 142, "tuna" },
+                    { -76, 5, 142, "stingray" },
+                    { -75, 5, 142, "sole" },
+                    { -74, 5, 142, "seahorse" },
+                    { -73, 5, 142, "piranha" },
+                    { -72, 5, 142, "pike" },
+                    { -71, 5, 142, "herring" },
+                    { -70, 5, 142, "haddock" },
+                    { -69, 5, 142, "dogfish" },
+                    { -68, 5, 142, "chub" },
+                    { -67, 5, 142, "catfish" },
+                    { -66, 5, 142, "carp" },
+                    { -65, 5, 142, "bass" },
+                    { -64, 1, 141, "tuatara" },
+                    { -63, 1, 141, "tortoise" },
+                    { -62, 1, 141, "slowworm" },
+                    { -61, 1, 141, "seasnake" },
+                    { -60, 1, 141, "pitviper" },
+                    { -59, 2, 140, "wren" },
+                    { -58, 2, 140, "vulture" },
+                    { -57, 2, 140, "swan" },
+                    { -56, 2, 140, "sparrow" },
+                    { -55, 2, 140, "skua" },
+                    { -54, 2, 140, "skimmer" },
+                    { -53, 2, 140, "rhea" },
+                    { -52, 2, 140, "pheasant" },
+                    { -51, 2, 140, "penguin" },
+                    { -50, 2, 140, "parakeet" },
+                    { -49, 2, 140, "ostrich" },
+                    { -48, 2, 140, "lark" },
+                    { -47, 2, 140, "kiwi" },
+                    { -46, 2, 140, "hawk" },
+                    { -45, 2, 140, "gull" },
+                    { -44, 2, 140, "flamingo" },
+                    { -43, 2, 140, "duck" },
+                    { -42, 2, 140, "dove" },
+                    { -41, 2, 140, "crow" },
+                    { -40, 2, 140, "chicken" },
+                    { -39, 0, 139, "wolf" },
+                    { -38, 0, 138, "wallaby" },
+                    { -37, 0, 137, "vole" },
+                    { -36, 0, 136, "squirrel" },
+                    { -35, 0, 135, "sealion" },
+                    { -34, 0, 134, "seal" },
+                    { -33, 0, 133, "reindeer" },
+                    { -32, 0, 132, "raccoon" },
+                    { -31, 0, 131, "pussycat" },
+                    { -30, 0, 130, "puma" },
+                    { -29, 0, 129, "porpoise" },
+                    { -28, 0, 128, "pony" },
+                    { -27, 0, 127, "polecat" },
+                    { -26, 0, 126, "platypus" },
+                    { -25, 0, 125, "oryx" },
+                    { -24, 0, 124, "opossum" },
+                    { -23, 0, 123, "mongoose" },
+                    { -22, 0, 122, "mole" },
+                    { -21, 0, 121, "mink" },
+                    { -20, 0, 120, "lynx" },
+                    { -19, 0, 119, "lion" },
+                    { -18, 0, 118, "leopard" },
+                    { -17, 0, 117, "hare" },
+                    { -16, 0, 116, "hamster" },
+                    { -15, 0, 115, "gorilla" },
+                    { -14, 0, 114, "goat" },
+                    { -13, 0, 113, "giraffe" },
+                    { -12, 0, 112, "fruitbat" },
+                    { -11, 0, 111, "elephant" },
+                    { -10, 0, 110, "dolphin" },
+                    { -9, 0, 109, "deer" },
+                    { -8, 0, 108, "cheetah" },
+                    { -7, 0, 107, "cavy" },
+                    { -6, 0, 106, "calf" },
+                    { -5, 0, 105, "buffalo" },
+                    { -4, 0, 104, "boar" },
+                    { -3, 0, 103, "bear" },
+                    { -2, 0, 102, "antelope" },
+                    { -1, 0, 101, "aardvark" }
                 });
 
             migrationBuilder.InsertData(
@@ -238,14 +250,24 @@ namespace ZooManagement.Migrations
                 columns: new[] { "Id", "DateOfAcquisition", "DateOfBirth", "EnclosureId", "Name", "Sex", "SpeciesId" },
                 values: new object[,]
                 {
-                    { -2, new DateTime(2001, 2, 3, 0, 0, 0, 0, DateTimeKind.Utc), new DateTime(1997, 9, 9, 23, 0, 0, 0, DateTimeKind.Utc), 119, "Nala", 1, 19 },
-                    { -1, new DateTime(2000, 1, 1, 0, 0, 0, 0, DateTimeKind.Utc), new DateTime(1997, 10, 15, 23, 0, 0, 0, DateTimeKind.Utc), 119, "Simba", 0, 19 }
+                    { -2, new DateTime(2001, 2, 3, 0, 0, 0, 0, DateTimeKind.Utc), new DateTime(1997, 9, 9, 23, 0, 0, 0, DateTimeKind.Utc), 119, "Nala", 1, -19 },
+                    { -1, new DateTime(2000, 1, 1, 0, 0, 0, 0, DateTimeKind.Utc), new DateTime(1997, 10, 15, 23, 0, 0, 0, DateTimeKind.Utc), 119, "Simba", 0, -19 }
                 });
+
+            migrationBuilder.CreateIndex(
+                name: "IX_Animals_EnclosureId",
+                table: "Animals",
+                column: "EnclosureId");
 
             migrationBuilder.CreateIndex(
                 name: "IX_Animals_SpeciesId",
                 table: "Animals",
                 column: "SpeciesId");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_Species_EnclosureId",
+                table: "Species",
+                column: "EnclosureId");
         }
 
         /// <inheritdoc />
@@ -255,10 +277,10 @@ namespace ZooManagement.Migrations
                 name: "Animals");
 
             migrationBuilder.DropTable(
-                name: "Enclosure");
+                name: "Species");
 
             migrationBuilder.DropTable(
-                name: "Species");
+                name: "Enclosure");
         }
     }
 }

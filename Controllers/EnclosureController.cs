@@ -42,4 +42,14 @@ public class EnclosureController : Controller
             }
         );
     }
+
+
+    // [HttpGet("/enclosure/")]
+    // public IActionResult GetByClassification([FromQuery] string classification="")
+    // {
+    //     var species = _zoo
+    //         .Species.Include(species => species.Enclosure)
+    //         .SingleOrDefault(species => species.Classification.ToString().ToLower() == classification.ToLower());
+    //     return Ok(species);
+    // }
 }

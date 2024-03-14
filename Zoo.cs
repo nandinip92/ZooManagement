@@ -15,28 +15,37 @@ public class Zoo : DbContext
     public DbSet<Species> Species { get; set; } = null!;
     public DbSet<Enclosure> Enclosures { get; set; } = null!;
     private readonly ILogger<Zoo> _logger;
+    protected readonly IConfiguration Configuration;
 
-    public Zoo(DbContextOptions<Zoo> options, ILogger<Zoo> logger)
+    public Zoo(DbContextOptions<Zoo> options, ILogger<Zoo> logger, IConfiguration configuration)
         : base(options)
     {
         _logger = logger;
+        Configuration = configuration;
     }
 
     protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
     {
-        optionsBuilder.UseNpgsql(
-            "Host=localhost; Port=5432; Database=zoo; Username=zoo; Password=zoo;Include Error Detail=True;"
-        );
+        optionsBuilder.UseSqlite(Configuration.GetConnectionString("ZooApiDatabase"));
     }
 
+    /*
+    For PostGres
+     public Zoo(DbContextOptions<Zoo> options, ILogger<Zoo> logger)
+            : base(options)
+        {
+            _logger = logger;
+        }
+
+        protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
+        {
+            optionsBuilder.UseNpgsql(
+                "Host=localhost; Port=5432; Database=zoo; Username=zoo; Password=zoo;Include Error Detail=True;"
+            );
+        }
+    */
     protected override void OnModelCreating(ModelBuilder modelBuilder)
     {
-        // var lion = new Species
-        // {
-        //     Id = -1,
-        //     Name = "lion",
-        //     Classification = Classification.Mammal,
-        // };
         var speciesClassificationsDatafile = "./Data/SpeciesClassifications.csv";
         GetSpeciesFromCSVFile(modelBuilder, speciesClassificationsDatafile);
 
@@ -87,8 +96,7 @@ public class Zoo : DbContext
             };
             using var csvData = new CsvReader(fileReader, csvConfig);
             int speciesId = 0;
-            int enclosureId = 100
-            ;
+            int enclosureId = 100;
             foreach (var species in csvData.GetRecords<SpeciesClassification>())
             {
                 var speciesClassType = species.ClassType;

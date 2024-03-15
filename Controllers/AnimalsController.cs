@@ -21,6 +21,7 @@ public class AnimalsController : Controller
     [HttpGet("{id}")]
     public IActionResult GetById([FromRoute] int id)
     {
+        Console.WriteLine($"****************************GetByID: {id}");
         var matchingAnimal = _zoo
             .Animals.Include(animal => animal.Species)
             .Include(animal => animal.Enclosure)
@@ -34,6 +35,7 @@ public class AnimalsController : Controller
         return Ok(
             new AnimalResponse
             {
+                Id = matchingAnimal.Id,
                 Name = matchingAnimal.Name,
                 SpeciesName = matchingAnimal.Species.Name,
                 Classification = matchingAnimal.Species.Classification.ToString().ToLower(),
@@ -62,6 +64,7 @@ public class AnimalsController : Controller
             responseList.Add(
                 new AnimalResponse
                 {
+                    Id = animal.Id,
                     Name = animal.Name,
                     SpeciesName = animal.Species.Name,
                     Classification = animal.Species.Classification.ToString().ToLower(),
@@ -99,22 +102,7 @@ public class AnimalsController : Controller
             )
             .Entity;
         _zoo.SaveChanges();
-        var animal = _zoo
-            .Animals.Include(animal => animal.Species)
-            .ThenInclude(animal => animal.Enclosure)
-            .Where(animal => animal.Name == newAnimal.Name).Single();
-            
-        return Ok( new AnimalResponse
-                {
-                    Name = animal.Name,
-                    SpeciesName = animal.Species.Name,
-                    Classification = animal.Species.Classification.ToString().ToLower(),
-                    Sex = animal.Sex.ToString().ToLower(),
-                    EnclosureId = animal.Enclosure.Id,
-                    EnclosureName = animal.Enclosure.Name.ToLower(),
-                    DateOfBirth = animal.DateOfBirth,
-                    DateOfAcquisition = animal.DateOfAcquisition,
-                });
-        // return Ok();
+
+        return CreatedAtAction(nameof(GetById), new { id = newAnimal.Id }, newAnimal);
     }
 }

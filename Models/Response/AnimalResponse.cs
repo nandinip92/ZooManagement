@@ -6,6 +6,7 @@ namespace ZooManagement.Models.Data;
 
 public class AnimalResponse
 {
+    public required int Id{get;set;}
     public required string Name { get; set; }
     public required string SpeciesName { get; set; }
     public required string Classification { get; set; }

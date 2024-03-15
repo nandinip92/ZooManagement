@@ -1,3 +1,4 @@
+using System.Text.Json.Serialization;
 using NLog.Extensions.Logging;
 using ZooManagement;
 
@@ -10,7 +11,9 @@ builder.Services.AddCors(options =>
     });
 });
 
-builder.Services.AddControllers();
+builder.Services.AddControllers().AddJsonOptions(options=>{
+    options.JsonSerializerOptions.ReferenceHandler=ReferenceHandler.IgnoreCycles;
+});
 
 builder.Services.AddDbContext<Zoo>(options =>
 {

@@ -21,7 +21,6 @@ public class AnimalsController : Controller
     [HttpGet("{id}")]
     public IActionResult GetById([FromRoute] int id)
     {
-        Console.WriteLine($"****************************GetByID: {id}");
         var matchingAnimal = _zoo
             .Animals.Include(animal => animal.Species)
             .Include(animal => animal.Enclosure)

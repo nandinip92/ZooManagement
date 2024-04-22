@@ -18,33 +18,20 @@ public class AnimalsController : Controller
         _logger = logger;
     }
 
-    [HttpGet("{id}")]
-    public IActionResult GetById([FromRoute] int id)
+    public static AnimalResponse ResponseToEndpoint(Animal animal)
     {
-        var matchingAnimal = _zoo
-            .Animals.Include(animal => animal.Species)
-            .Include(animal => animal.Enclosure)
-            .SingleOrDefault(animal => animal.Id == id);
-        if (matchingAnimal == null)
+        return new AnimalResponse
         {
-            return NotFound();
-        }
-        // _logger.LogInformation("Foud the match");
-        // return Ok(matchingAnimal);
-        return Ok(
-            new AnimalResponse
-            {
-                Id = matchingAnimal.Id,
-                Name = matchingAnimal.Name,
-                SpeciesName = matchingAnimal.Species.Name,
-                Classification = matchingAnimal.Species.Classification.ToString().ToLower(),
-                Sex = matchingAnimal.Sex.ToString().ToLower(),
-                EnclosureId = matchingAnimal.Enclosure.Id,
-                EnclosureName = matchingAnimal.Enclosure.Name.ToLower(),
-                DateOfBirth = matchingAnimal.DateOfBirth,
-                DateOfAcquisition = matchingAnimal.DateOfAcquisition,
-            }
-        );
+            Id = animal.Id,
+            Name = animal.Name,
+            SpeciesName = animal.Species.Name,
+            Classification = animal.Species.Classification.ToString().ToLower(),
+            Sex = animal.Sex.ToString().ToLower(),
+            EnclosureId = animal.Enclosure.Id,
+            EnclosureName = animal.Enclosure.Name.ToLower(),
+            DateOfBirth = animal.DateOfBirth,
+            DateOfAcquisition = animal.DateOfAcquisition,
+        };
     }
 
     [HttpGet]
@@ -60,22 +47,26 @@ public class AnimalsController : Controller
         var responseList = new List<AnimalResponse>();
         animalsData.ForEach(animal =>
         {
-            responseList.Add(
-                new AnimalResponse
-                {
-                    Id = animal.Id,
-                    Name = animal.Name,
-                    SpeciesName = animal.Species.Name,
-                    Classification = animal.Species.Classification.ToString().ToLower(),
-                    Sex = animal.Sex.ToString().ToLower(),
-                    EnclosureId = animal.Enclosure.Id,
-                    EnclosureName = animal.Enclosure.Name.ToLower(),
-                    DateOfBirth = animal.DateOfBirth,
-                    DateOfAcquisition = animal.DateOfAcquisition,
-                }
-            );
+            responseList.Add(ResponseToEndpoint(animal));
         });
         return Ok(responseList);
+    }
+
+    [HttpGet("{id}")]
+    public IActionResult GetById([FromRoute] int id)
+    {
+        Console.Write($"*****************GetId: {id}");
+        var matchingAnimal = _zoo
+            .Animals.Include(animal => animal.Species)
+            .Include(animal => animal.Enclosure)
+            .SingleOrDefault(animal => animal.Id == id);
+        if (matchingAnimal == null)
+        {
+            return NotFound();
+        }
+        // _logger.LogInformation("Foud the match");
+        // return Ok(matchingAnimal);
+        return Ok(ResponseToEndpoint(matchingAnimal));
     }
 
     [HttpPost]
@@ -102,6 +93,6 @@ public class AnimalsController : Controller
             .Entity;
         _zoo.SaveChanges();
 
-        return CreatedAtAction(nameof(GetById), new { id = newAnimal.Id }, newAnimal);
+        return CreatedAtAction(nameof(GetById), new { id = newAnimal.Id }, newAnimal);//This is not working need to be checked
     }
 }

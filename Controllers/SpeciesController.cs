@@ -18,7 +18,7 @@ public class SpeciesController : Controller
         _logger = logger;
     }
 
-    [HttpGet]
+    [HttpGet("all")]
     public IActionResult GetAllSpecies()
     {
         var species = _zoo.Species.Include(species => species.Enclosure).ToList();
@@ -39,12 +39,12 @@ public class SpeciesController : Controller
         return Ok(species);
     }
 
-    [HttpGet("/speciecs/")]
+    [HttpGet("/species/")]
     public IActionResult GetByName([FromQuery] string name="")
     {
         var species = _zoo
             .Species.Include(species => species.Enclosure)
-            .SingleOrDefault(species => species.Name.ToLower() == name.ToLower());
+            .SingleOrDefault(species => string.Equals(species.Name, name));
         return Ok(species);
     }
 }

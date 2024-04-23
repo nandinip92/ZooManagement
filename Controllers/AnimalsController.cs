@@ -2,6 +2,7 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using ZooManagement.Models.Data;
 using ZooManagement.Models.Request;
+using ZooManagement.Models.Response;
 
 namespace ZooManagement.Controllers;
 

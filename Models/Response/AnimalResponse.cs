@@ -1,4 +1,4 @@
-namespace ZooManagement.Models.Data;
+namespace ZooManagement.Models.Response;
 
 public class AnimalResponse
 {

@@ -21,7 +21,15 @@ public class SpeciesController : Controller
     private static SpeciesResponse ResponseToSpeciesEndpoint(Species species)
     {
         var enclosure = species.Enclosure;
-        var animalName = enclosure.Animals.Select(animal => animal.Name).ToList();
+        // var animalName = enclosure.Animals.Select(animal => animal.Name).ToList();
+        var animals = enclosure.Animals.Select(animal => new EnclosureAnimalResponse
+        {
+            AnimalId = animal.Id,
+            AnimalName = animal.Name.ToLower(),
+            Sex = animal.Sex.ToString().ToLower(),
+            DateOfBirth = animal.DateOfBirth,
+            DateOfAcquisition = animal.DateOfAcquisition
+        });
         return new SpeciesResponse
         {
             SpeciesId = species.Id,
@@ -32,7 +40,7 @@ public class SpeciesController : Controller
                 EnclosureName = enclosure.Name.ToLower(),
                 Classification = enclosure.Classification.ToString().ToLower(),
                 AnimalsCount = enclosure.Animals.Count,
-                Animals = animalName
+                Animals = animals.ToList()
             }
         };
     }

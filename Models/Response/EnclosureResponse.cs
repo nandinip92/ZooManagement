@@ -7,5 +7,5 @@ class EnclosureResponse
 
     public required string Classification { get; set; }
     public required int AnimalsCount { get; set; }
-    public required List<string> Animals { get; set; }
+    public required List<EnclosureAnimalResponse> Animals { get; set; }
 }

@@ -1,5 +1,6 @@
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
+using ZooManagement.Models.Data;
 using ZooManagement.Models.Response;
 
 namespace ZooManagement.Controllers;
@@ -17,6 +18,27 @@ public class EnclosureController : Controller
         _logger = logger;
     }
 
+    private static EnclosureResponse ResponseToEnclosure(Enclosure enclosure)
+    {
+        return new EnclosureResponse
+        {
+            EnclosureId = enclosure.Id,
+            EnclosureName = enclosure.Name.ToLower(),
+            Classification = enclosure.Classification.ToString().ToLower(),
+            AnimalsCount = enclosure.Animals.Count,
+            Animals = enclosure
+                .Animals.Select(animal => new EnclosureAnimalResponse
+                {
+                    AnimalId = animal.Id,
+                    AnimalName = animal.Name.ToLower(),
+                    Sex = animal.Sex.ToString().ToLower(),
+                    DateOfBirth = animal.DateOfBirth,
+                    DateOfAcquisition = animal.DateOfAcquisition
+                })
+                .ToList()
+        };
+    }
+
     [HttpGet]
     public IActionResult GetAllEnclosures()
     {
@@ -25,17 +47,7 @@ public class EnclosureController : Controller
         var enclosureResponseList = new List<EnclosureResponse>();
         enclosures.ForEach(enclosure =>
         {
-            var animalNames = enclosure.Animals.Select(animal => animal.Name).ToList();
-            enclosureResponseList.Add(
-                new EnclosureResponse
-                {
-                    EnclosureId = enclosure.Id,
-                    EnclosureName = enclosure.Name.ToLower(),
-                    Classification = enclosure.Classification.ToString().ToLower(),
-                    AnimalsCount = enclosure.Animals.Count,
-                    Animals = animalNames
-                }
-            );
+            enclosureResponseList.Add(ResponseToEnclosure(enclosure));
         });
         return Ok(enclosureResponseList);
     }
@@ -50,17 +62,8 @@ public class EnclosureController : Controller
         {
             return NotFound();
         }
-        var animalName = enclosure.Animals.Select(animal => animal.Name).ToList();
-        return Ok(
-            new EnclosureResponse
-            {
-                EnclosureId = enclosure.Id,
-                EnclosureName = enclosure.Name.ToLower(),
-                Classification = enclosure.Classification.ToString().ToLower(),
-                AnimalsCount = enclosure.Animals.Count,
-                Animals = animalName
-            }
-        );
+        // var animalName = enclosure.Animals.Select(animal => animal.Name).ToList();
+        return Ok(ResponseToEnclosure(enclosure));
     }
 
     // [HttpGet("/enclosure/")]

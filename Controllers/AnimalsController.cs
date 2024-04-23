@@ -18,7 +18,7 @@ public class AnimalsController : Controller
         _logger = logger;
     }
 
-    public static AnimalResponse ResponseToEndpoint(Animal animal)
+    public static AnimalResponse ResponseToAnimalEndpoint(Animal animal)
     {
         return new AnimalResponse
         {
@@ -47,7 +47,7 @@ public class AnimalsController : Controller
 
         var responseList = new AnimalListResponse
         {
-            AnimalsList = animalsData.Select(animal => ResponseToEndpoint(animal)).ToList()
+            AnimalsList = animalsData.Select(animal => ResponseToAnimalEndpoint(animal)).ToList()
         };
         return Ok(responseList);
     }
@@ -66,7 +66,7 @@ public class AnimalsController : Controller
         }
         // _logger.LogInformation("Foud the match");
         // return Ok(matchingAnimal);
-        return Ok(ResponseToEndpoint(matchingAnimal));
+        return Ok(ResponseToAnimalEndpoint(matchingAnimal));
     }
 
     [HttpPost]

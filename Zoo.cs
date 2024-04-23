@@ -100,8 +100,13 @@ public class Zoo : DbContext
             foreach (var species in csvData.GetRecords<SpeciesClassification>())
             {
                 var speciesClassType = species.ClassType;
-                Classification classification;
-                if (Enum.TryParse<Classification>(speciesClassType, out classification))
+
+                if (
+                    Enum.TryParse<Classification>(
+                        speciesClassType,
+                        out Classification classification
+                    )
+                )
                 {
                     // var SpeciesEnclosureId = enclosureId++;
                     //Creating an Enclosure for Birds, Fishes, Reptiles, Insects, Bugs etc

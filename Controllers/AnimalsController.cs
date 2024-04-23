@@ -44,11 +44,11 @@ public class AnimalsController : Controller
             .ThenBy(animal => animal.Name)
             .ToList();
         var animalsData = animalsList.Skip((page - 1) * pageSize).Take(pageSize).ToList();
-        var responseList = new List<AnimalResponse>();
-        animalsData.ForEach(animal =>
+
+        var responseList = new AnimalListResponse
         {
-            responseList.Add(ResponseToEndpoint(animal));
-        });
+            AnimalsList = animalsData.Select(animal => ResponseToEndpoint(animal)).ToList()
+        };
         return Ok(responseList);
     }
 
@@ -93,6 +93,6 @@ public class AnimalsController : Controller
             .Entity;
         _zoo.SaveChanges();
 
-        return CreatedAtAction(nameof(GetById), new { id = newAnimal.Id }, newAnimal);//This is not working need to be checked
+        return CreatedAtAction(nameof(GetById), new { id = newAnimal.Id }, newAnimal); //This is not working need to be checked
     }
 }

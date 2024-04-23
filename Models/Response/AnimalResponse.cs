@@ -1,7 +1,3 @@
-using System.ComponentModel.DataAnnotations.Schema;
-using System.Diagnostics.CodeAnalysis;
-using ZooManagement.Enums;
-
 namespace ZooManagement.Models.Data;
 
 public class AnimalResponse

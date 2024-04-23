@@ -77,6 +77,7 @@ public class SpeciesController : Controller
     {
         var species = _zoo
             .Species.Include(species => species.Enclosure)
+            .Include(species => species.Enclosure.Animals)
             .SingleOrDefault(species => string.Equals(species.Name, name));
         // return Ok(species);
         if (species == null)

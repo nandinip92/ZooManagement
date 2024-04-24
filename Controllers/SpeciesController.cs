@@ -96,14 +96,4 @@ public class SpeciesController : Controller
 
         return Ok(ResponseToSpeciesEndpoint(species));
     }
-
-    // [HttpGet]
-    // public IActionResult GetImage()
-    // {
-    //     // Byte[] b = System.IO.File.ReadAllBytes(@".\Images\bear.jpg"); // You can use your own method over here.
-    //     // return File(b, "image/jpeg");
-    //     var path = Path.Combine(Directory.GetCurrentDirectory(), @".\Images\*.jpg");
-    //     Console.WriteLine($"****************{path}");
-    //     return PhysicalFile(path, "image/jpeg");
-    // }
 }

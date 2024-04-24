@@ -6,7 +6,7 @@ using ZooManagement.Models.Response;
 namespace ZooManagement.Controllers;
 
 [ApiController]
-[Route("enclosure")]
+[Route("/enclosure")]
 public class EnclosureController : Controller
 {
     private readonly Zoo _zoo;

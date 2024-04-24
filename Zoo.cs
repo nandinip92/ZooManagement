@@ -24,26 +24,20 @@ public class Zoo : DbContext
         Configuration = configuration;
     }
 
-    protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
-    {
-        optionsBuilder.UseSqlite(Configuration.GetConnectionString("ZooApiDatabase"));
-    }
-
     /*
-    For PostGres
-     public Zoo(DbContextOptions<Zoo> options, ILogger<Zoo> logger)
-            : base(options)
-        {
-            _logger = logger;
-        }
-
+    For SqlLite
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
         {
-            optionsBuilder.UseNpgsql(
-                "Host=localhost; Port=5432; Database=zoo; Username=zoo; Password=zoo;Include Error Detail=True;"
-            );
+            optionsBuilder.UseSqlite(Configuration.GetConnectionString("ZooApiDatabase"));
         }
     */
+    protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
+    {
+        optionsBuilder.UseNpgsql(
+            "Host=localhost; Port=5432; Database=zoo; Username=zoo; Password=zoo;Include Error Detail=True;"
+        );
+    }
+
     protected override void OnModelCreating(ModelBuilder modelBuilder)
     {
         var speciesClassificationsDatafile = "./Data/SpeciesClassifications.csv";

@@ -1,4 +1,3 @@
-using System.Diagnostics;
 using System.Globalization;
 using CsvHelper;
 using CsvHelper.Configuration;
@@ -24,20 +23,20 @@ public class Zoo : DbContext
         Configuration = configuration;
     }
 
-    /*
-    For SqlLite
-        protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
-        {
-            optionsBuilder.UseSqlite(Configuration.GetConnectionString("ZooApiDatabase"));
-        }
-    */
+    //For SqlLite
+    protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
+    {
+        optionsBuilder.UseSqlite(Configuration.GetConnectionString("ZooApiDatabase"));
+    }
+
+    /*For PostGres
     protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
     {
         optionsBuilder.UseNpgsql(
             "Host=localhost; Port=5432; Database=zoo; Username=zoo; Password=zoo;Include Error Detail=True;"
         );
     }
-
+*/
     protected override void OnModelCreating(ModelBuilder modelBuilder)
     {
         var speciesClassificationsDatafile = "./Data/SpeciesClassifications.csv";

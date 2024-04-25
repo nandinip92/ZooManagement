@@ -23,11 +23,11 @@ public class Zoo : DbContext
         Configuration = configuration;
     }
 
-    //For SqlLite
+    /*For SqlLite
     protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
     {
         optionsBuilder.UseSqlite(Configuration.GetConnectionString("ZooApiDatabase"));
-    }
+    }*/
 
     /*For PostGres
     protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)

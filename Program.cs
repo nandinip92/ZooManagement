@@ -1,4 +1,5 @@
 using System.Text.Json.Serialization;
+using Microsoft.EntityFrameworkCore;
 using NLog.Extensions.Logging;
 using ZooManagement;
 
@@ -20,6 +21,7 @@ builder
 
 builder.Services.AddDbContext<Zoo>(options =>
 {
+    options.UseSqlite(builder.Configuration.GetConnectionString("ZooApiDatabase"));
     options.EnableSensitiveDataLogging();
 });
 

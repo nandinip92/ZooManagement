@@ -1,7 +1,4 @@
 using System.ComponentModel;
-using CsvHelper.Configuration.Attributes;
-using ZooManagement.Enums;
-
 namespace ZooManagement.Models.Request;
 
 public class SearchAnimalRequest

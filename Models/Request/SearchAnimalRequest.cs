@@ -8,6 +8,6 @@ public class SearchAnimalRequest
 
     [DefaultValue(10)]
     public int PageSize { get; set; } = 10;
-    public string? SortBy { get; set; } //AnimalName|| SpeciesName || Classification || Sex
+    public string? SortBy { get; set; } //AnimalName|| SpeciesName || Classification
     public bool? SortOrder { get; set; }
 }

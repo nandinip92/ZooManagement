@@ -1,6 +1,7 @@
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using ZooManagement.Models.Data;
+using ZooManagement.Models.Request;
 using ZooManagement.Models.Response;
 
 namespace ZooManagement.Controllers;
@@ -45,25 +46,57 @@ public class SpeciesController : Controller
         };
     }
 
-    [HttpGet("all")]
-    public IActionResult GetAllSpecies()
+    // [HttpGet("all")]
+    // public IActionResult GetAllSpecies()
+    // {
+    //     var species = _zoo
+    //         .Species.Include(species => species.Enclosure)
+    //         .Include(species => species.Enclosure.Animals)
+    //         .OrderBy(species => species.Name)
+    //         .ToList();
+    //     if (species == null)
+    //     {
+    //         return NotFound();
+    //     }
+    //     var responseList = new SpeciesListResponse
+    //     {
+    //         SpeciesList = species
+    //             .Select(singleSpecies => ResponseToSpeciesEndpoint(singleSpecies))
+    //             .ToList()
+    //     };
+    //     return Ok(responseList);
+    // }
+    [HttpGet()]
+    public IActionResult Search([FromQuery] SearchSpeciesRequest searchRequest)
     {
         var species = _zoo
             .Species.Include(species => species.Enclosure)
             .Include(species => species.Enclosure.Animals)
-            .OrderBy(species=>species.Name)
             .ToList();
         if (species == null)
         {
             return NotFound();
         }
-        var responseList = new SpeciesListResponse
+        if (!string.IsNullOrEmpty(searchRequest.Classification.ToString()))
         {
-            SpeciesList = species
-                .Select(singleSpecies => ResponseToSpeciesEndpoint(singleSpecies))
-                .ToList()
-        };
-        return Ok(responseList);
+            species = species
+                .Where(species => species.Classification == searchRequest.Classification)
+                .ToList();
+        }
+        if (!string.IsNullOrEmpty(searchRequest.SearchSpecies))
+        {
+            species = species
+                .Where(species => species.Name.Contains(searchRequest.SearchSpecies))
+                .ToList();
+        }
+        return Ok(
+            new SpeciesListResponse
+            {
+                SpeciesList = species
+                    .Select(singleSpecies => ResponseToSpeciesEndpoint(singleSpecies))
+                    .ToList()
+            }
+        );
     }
 
     [HttpGet("{id}")]
@@ -74,22 +107,6 @@ public class SpeciesController : Controller
             .Include(species => species.Enclosure.Animals)
             .SingleOrDefault(species => species.Id == id);
 
-        if (species == null)
-        {
-            return NotFound();
-        }
-
-        return Ok(ResponseToSpeciesEndpoint(species));
-    }
-
-    [HttpGet("")]
-    public IActionResult GetByName([FromQuery] string name = "")
-    {
-        var species = _zoo
-            .Species.Include(species => species.Enclosure)
-            .Include(species => species.Enclosure.Animals)
-            .SingleOrDefault(species => string.Equals(species.Name, name));
-        // return Ok(species);
         if (species == null)
         {
             return NotFound();

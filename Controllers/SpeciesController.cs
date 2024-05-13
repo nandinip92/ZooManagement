@@ -22,7 +22,6 @@ public class SpeciesController : Controller
     private static SpeciesResponse ResponseToSpeciesEndpoint(Species species)
     {
         var enclosure = species.Enclosure;
-        // var animalName = enclosure.Animals.Select(animal => animal.Name).ToList();
         var animals = enclosure.Animals.Select(animal => new EnclosureAnimalResponse
         {
             AnimalId = animal.Id,
@@ -94,6 +93,7 @@ public class SpeciesController : Controller
             {
                 SpeciesList = species
                     .Select(singleSpecies => ResponseToSpeciesEndpoint(singleSpecies))
+                    .OrderBy(species => species.SpeciesName)
                     .ToList()
             }
         );

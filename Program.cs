@@ -41,14 +41,15 @@ var app = builder.Build();
 app.UseSwagger();
 
 // Configure the HTTP request pipeline.
-app.UseSwaggerUI(options =>
+if (app.Environment.IsDevelopment())
 {
-    options.SwaggerEndpoint("/swagger/v1/swagger.json", "Web API V1");
-    if (app.Environment.IsDevelopment())
-        options.RoutePrefix = "swagger";
-    else
+    app.UseSwaggerUI();
+    app.UseSwaggerUI(options =>
+    {
+        options.SwaggerEndpoint("/swagger/v1/swagger.json", "v1");
         options.RoutePrefix = string.Empty;
-});
+    });
+}
 
 app.UseHttpsRedirection();
 

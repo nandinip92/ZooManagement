@@ -22,31 +22,14 @@ builder
 
 builder.Services.AddDbContext<Zoo>(options =>
 {
-    options.UseSqlite(builder.Configuration.GetConnectionString("ZooApiDatabaseProd"));
+    options.UseSqlite(builder.Configuration.GetConnectionString("ZooApiDatabase"));
     // options.UseNpgsql(
     //     "Host=localhost; Port=5432; Database=zoo; Username=zoo; Password=zoo;Include Error Detail=True;"
     // );
     options.EnableSensitiveDataLogging();
 });
 
-// if (Environment.GetEnvironmentVariable("ASPNETWEBAPI_ENVIRONMENT") == "Production")
-// {
-//     builder.Services.AddDbContext<Zoo>(options =>
-//     {
-//         options.UseSqlite(builder.Configuration.GetConnectionString("ZooApiDatabaseProd"));
-//     });
-// }
-// else
-// {
-//     builder.Services.AddDbContext<Zoo>(options =>
-//     {
-//         options.UseSqlite(builder.Configuration.GetConnectionString("ZooApiDatabase"));
-//         // options.UseNpgsql(
-//         //     "Host=localhost; Port=5432; Database=zoo; Username=zoo; Password=zoo;Include Error Detail=True;"
-//         // );
-//         options.EnableSensitiveDataLogging();
-//     });
-// }
+
 builder.Services.AddLogging(loggingBuilder =>
 {
     loggingBuilder.AddNLog();

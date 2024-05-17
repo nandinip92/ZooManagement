@@ -11,8 +11,8 @@ using ZooManagement;
 namespace ZooManagement.Migrations
 {
     [DbContext(typeof(Zoo))]
-    [Migration("20240314141613_Initial")]
-    partial class Initial
+    [Migration("20240517201014_initSQLite")]
+    partial class initSQLite
     {
         /// <inheritdoc />
         protected override void BuildTargetModel(ModelBuilder modelBuilder)

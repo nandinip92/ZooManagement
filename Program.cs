@@ -29,7 +29,6 @@ builder.Services.AddDbContext<Zoo>(options =>
     options.EnableSensitiveDataLogging();
 });
 
-
 builder.Services.AddLogging(loggingBuilder =>
 {
     loggingBuilder.AddNLog();
